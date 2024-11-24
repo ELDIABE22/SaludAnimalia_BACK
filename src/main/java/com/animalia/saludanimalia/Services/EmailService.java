@@ -1,6 +1,7 @@
 package com.animalia.saludanimalia.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,14 @@ public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Value("${spring.mail.username}")
+    private String email;
+
     public void sendSimpleMessage(String to, String subject, String text) {
         MimeMessage message = emailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("jeronimo.jsa.133@gmail.com");
+            helper.setFrom(email);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(text, true);
