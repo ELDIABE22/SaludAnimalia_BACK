@@ -1,0 +1,29 @@
+CREATE TABLE Usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    telefono CHAR(10) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Mascotas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    nombre VARCHAR(255) NOT NULL,
+    especie VARCHAR(50) NOT NULL,
+    raza VARCHAR(50) NOT NULL,
+    edad INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id)
+);
+
+CREATE TABLE Citas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    id_mascota INT,
+    fecha_cita DATE NOT NULL,
+    hora_cita TIME NOT NULL,
+    motivo VARCHAR(255),
+    estado VARCHAR(50) DEFAULT 'Programado', -- Estados posibles: Programado, Atendido, Cancelado
+    FOREIGN KEY (id_mascota) REFERENCES Mascotas(id),
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id)
+);
